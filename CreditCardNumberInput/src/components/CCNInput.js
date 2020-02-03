@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
+import ccnValidator from '../decorators/ccnValidator';
 
-export default class CCNInput extends Component {
+class CCNInput extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            value: '',
-            validation: ''
+            value: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -14,7 +14,7 @@ export default class CCNInput extends Component {
     }
 
     render() {
-        const {validation} = this.state;
+        const {validation} = this.props;
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
@@ -34,15 +34,11 @@ export default class CCNInput extends Component {
     handleChange(event) {
         const dirtValue = event.target.value;
         if(dirtValue.length > 19) return;
-        const {divider} = this.props;
+        const {divider, validateCCN, onChangeFunction} = this.props;
         const regExp = new RegExp(divider, 'g');
         const newValue = dirtValue.replace(regExp, '');
-        if(newValue.length < 16 || !(newValue.match(/^\d+$/))) {
-            this.setState({validation: 'error'});
-        }
-        else {
-            this.setState({validation: 'success'});
-        }
+        onChangeFunction(newValue);
+        validateCCN(newValue);
         this.setState({value: newValue});
     }
 
@@ -70,3 +66,5 @@ export default class CCNInput extends Component {
 
     }
 }
+
+export default ccnValidator(CCNInput)

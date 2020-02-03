@@ -1,5 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
-import CCNInput from "./CCNInput";
+import CCNInput from "./components/CCNInput";
 
-render (<CCNInput divider='-' />, document.getElementById('container'));
+render (<CCNInput divider='-' onChangeFunction = {onChange}/>, document.getElementById('container'));
+
+function onChange(val) {
+    //do nothing;
+}
